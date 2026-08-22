@@ -1,0 +1,16 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', system-ui, sans-serif;
+  background: #f4f5f7;
+  color: #222;
+}
+
+#app {
+  display: flex;
+  justify-content: center;
+  padding: 48px 16px;
+}

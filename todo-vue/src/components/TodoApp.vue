@@ -1,0 +1,165 @@
+<script setup>
+import { reactive, ref, computed, watch } from 'vue'
+import TodoInput from './TodoInput.vue'
+import TodoList from './TodoList.vue'
+
+// 상태 소스: todos는 여러 화면에서 파생되므로 reactive 객체(배열)로 관리
+const STORAGE_KEY = 'todo-vue-items'
+
+function loadInitialTodos() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY)
+    return saved ? JSON.parse(saved) : []
+  } catch (e) {
+    return []
+  }
+}
+
+const todos = reactive(loadInitialTodos())
+
+// 필터 상태: 단일 값이므로 ref
+const filter = ref('all') // 'all' | 'active' | 'done'
+
+let nextId = todos.length ? Math.max(...todos.map((t) => t.id)) + 1 : 1
+
+function addTodo(text) {
+  const trimmed = text.trim()
+  if (!trimmed) return
+  todos.push({ id: nextId++, text: trimmed, done: false })
+}
+
+function toggleTodo(id) {
+  const target = todos.find((t) => t.id === id)
+  if (target) target.done = !target.done
+}
+
+function removeTodo(id) {
+  const idx = todos.findIndex((t) => t.id === id)
+  if (idx !== -1) todos.splice(idx, 1)
+}
+
+function clearCompleted() {
+  for (let i = todos.length - 1; i >= 0; i--) {
+    if (todos[i].done) todos.splice(i, 1)
+  }
+}
+
+// computed: 원본 상태(todos, filter)로부터 파생되는 값 — 별도로 저장하지 않는다
+const remainingCount = computed(() => todos.filter((t) => !t.done).length)
+const doneCount = computed(() => todos.length - remainingCount.value)
+
+const filteredTodos = computed(() => {
+  if (filter.value === 'active') return todos.filter((t) => !t.done)
+  if (filter.value === 'done') return todos.filter((t) => t.done)
+  return todos
+})
+
+// watch: todos 변경이라는 "부작용(side effect)"을 localStorage 저장에 연결
+watch(
+  todos,
+  (value) => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(value))
+  },
+  { deep: true }
+)
+</script>
+
+<template>
+  <main class="card">
+    <h1>To-Do List</h1>
+
+    <TodoInput @add="addTodo" />
+
+    <div class="filters">
+      <button
+        v-for="f in [
+          { key: 'all', label: '전체' },
+          { key: 'active', label: '진행중' },
+          { key: 'done', label: '완료' },
+        ]"
+        :key="f.key"
+        :class="{ active: filter === f.key }"
+        @click="filter = f.key"
+      >
+        {{ f.label }}
+      </button>
+    </div>
+
+    <TodoList
+      :todos="filteredTodos"
+      @toggle="toggleTodo"
+      @remove="removeTodo"
+    />
+
+    <footer class="summary">
+      <span>남은 항목 {{ remainingCount }}개 / 완료 {{ doneCount }}개</span>
+      <button
+        class="clear-btn"
+        :disabled="doneCount === 0"
+        @click="clearCompleted"
+      >
+        완료 항목 지우기
+      </button>
+    </footer>
+  </main>
+</template>
+
+<style scoped>
+.card {
+  width: 100%;
+  max-width: 480px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 32px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+h1 {
+  margin: 0 0 20px;
+  font-size: 22px;
+}
+
+.filters {
+  display: flex;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.filters button {
+  flex: 1;
+  padding: 8px 0;
+  border: 1px solid #ddd;
+  background: #fafafa;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.filters button.active {
+  background: #4f46e5;
+  border-color: #4f46e5;
+  color: #fff;
+}
+
+.summary {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: #666;
+}
+
+.clear-btn {
+  border: none;
+  background: none;
+  color: #4f46e5;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.clear-btn:disabled {
+  color: #bbb;
+  cursor: not-allowed;
+}
+</style>
