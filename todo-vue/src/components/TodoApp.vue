@@ -2,6 +2,7 @@
 import { reactive, ref, computed, watch } from 'vue'
 import TodoInput from './TodoInput.vue'
 import TodoList from './TodoList.vue'
+import StatCardList from './StatCardList.vue'
 
 // 상태 소스: todos는 여러 화면에서 파생되므로 reactive 객체(배열)로 관리
 const STORAGE_KEY = 'todo-vue-items'
@@ -44,6 +45,10 @@ function clearCompleted() {
   }
 }
 
+function resetFilter() {
+  filter.value = 'all'
+}
+
 // computed: 원본 상태(todos, filter)로부터 파생되는 값 — 별도로 저장하지 않는다
 const remainingCount = computed(() => todos.filter((t) => !t.done).length)
 const doneCount = computed(() => todos.length - remainingCount.value)
@@ -53,6 +58,17 @@ const filteredTodos = computed(() => {
   if (filter.value === 'done') return todos.filter((t) => t.done)
   return todos
 })
+const totalCount = computed(() => todos.length)
+const doneRate = computed(() =>
+    totalCount.value ? Math.round((doneCount.value / totalCount.value) * 100) : 0
+)
+
+const kpis = computed(() => [
+  { id: 'total', label: '전체', value: totalCount.value, unit: '개' },
+  { id: 'remaining', label: '남은 항목', value: remainingCount.value, unit: '개' },
+  { id: 'done', label: '완료', value: doneCount.value, unit: '개' },
+  { id: 'rate', label: '완료율', value: doneRate.value, unit: '%' },
+])
 
 // watch: todos 변경이라는 "부작용(side effect)"을 localStorage 저장에 연결
 watch(
@@ -83,6 +99,8 @@ watch(
       >
         {{ f.label }}
       </button>
+
+      <button @click = "resetFilter" :disabled = "filter === 'all'"></button>
     </div>
 
     <TodoList
@@ -91,8 +109,13 @@ watch(
       @remove="removeTodo"
     />
 
+    <StatCardList
+        :kpis="kpis"
+        @select="(id) => (filter = id === 'done' ? 'done' : id === 'remaining' ? 'active' : 'all')"
+    />
+
     <footer class="summary">
-      <span>남은 항목 {{ remainingCount }}개 / 완료 {{ doneCount }}개</span>
+      <span>남은 항목 {{ remainingCount }}개 / 완료 {{ doneCount }}</span>
       <button
         class="clear-btn"
         :disabled="doneCount === 0"
