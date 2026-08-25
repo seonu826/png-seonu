@@ -78,6 +78,45 @@ watch(
   },
   { deep: true }
 )
+function fakeFetchTodos(filterValue) {
+  const delay = filterValue === 'active' ? 2000 : 300 //진행중만 일부러 느리게
+  let timer
+  const promise = new Promise((resolve, reject) => {
+    timer = setTimeout(() => {
+      const result =
+          filterValue === 'active' ? todos.filter((t) => !t.done)
+              : filterValue === 'done' ? todos.filter((t) => t.done)
+                  : todos.slice()
+    resolve(result)
+    },delay)
+  })
+  const cancel = () => clearTimeout(timer)
+  return { promise, cancel }
+}
+
+const asyncFilteredTodos = ref([])
+const isLoading = ref(false)
+let requestId = 0
+
+watch(filter, (newFilter, oldFilter, onCleanup) => {
+  const currentId = ++requestId
+  isLoading.value = true
+
+  const timer = setTimeout(async () => {
+    const { promise } = fakeFetchTodos(newFilter)
+    const result = await promise
+
+    if (currentId === requestId) {
+      asyncFilteredTodos.value = result
+      isLoading.value = false
+    }
+  })
+
+  onCleanup(() => {
+    clearTimeout(timer)
+  })
+}, {immediate: true})
+
 </script>
 
 <template>
@@ -100,13 +139,15 @@ watch(
         {{ f.label }}
       </button>
 
+      <p v-if="isLoading">불러오는 중...</p>
+
       <button @click = "resetFilter" :disabled = "filter === 'all'"></button>
     </div>
 
     <TodoList
-      :todos="filteredTodos"
-      @toggle="toggleTodo"
-      @remove="removeTodo"
+        :todos="asyncFilteredTodos"
+        @toggle="toggleTodo"
+        @remove="removeTodo"
     />
 
     <StatCardList
