@@ -22,7 +22,11 @@ defineEmits(['toggle', 'remove'])
       @remove="$emit('remove', $event)"
     />
   </ul>
-  <p v-else class="empty">표시할 항목이 없습니다.</p>
+  <div v-else class="empty">
+    <slot name="empty">
+      <p>조건에 맞는 항목이 없습니다..</p>
+    </slot>
+  </div>
 </template>
 
 <style scoped>

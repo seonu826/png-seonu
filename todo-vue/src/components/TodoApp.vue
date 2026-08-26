@@ -145,10 +145,12 @@ watch(filter, (newFilter, oldFilter, onCleanup) => {
     </div>
 
     <TodoList
-        :todos="asyncFilteredTodos"
+        :todos="filteredTodos"
         @toggle="toggleTodo"
         @remove="removeTodo"
-    />
+    >
+
+    </TodoList>
 
     <StatCardList
         :kpis="kpis"
