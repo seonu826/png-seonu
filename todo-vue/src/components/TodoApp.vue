@@ -3,6 +3,13 @@ import { reactive, ref, computed, watch } from 'vue'
 import TodoInput from './TodoInput.vue'
 import TodoList from './TodoList.vue'
 import StatCardList from './StatCardList.vue'
+import { useWindowSize } from '../composables/useWindowSize'
+import { useRoute, useRouter } from 'vue-router'
+
+const { width, height } = useWindowSize()   // ← 3단계, 바로 이 줄
+
+const route = useRoute()
+const router = useRouter()
 
 // 상태 소스: todos는 여러 화면에서 파생되므로 reactive 객체(배열)로 관리
 const STORAGE_KEY = 'todo-vue-items'
@@ -19,7 +26,11 @@ function loadInitialTodos() {
 const todos = reactive(loadInitialTodos())
 
 // 필터 상태: 단일 값이므로 ref
-const filter = ref('all') // 'all' | 'active' | 'done'
+// URL에 ?filter=active 같은 값이 있으면 그걸 초기값으로 사용
+const initialFilter = ['all', 'active', 'done'].includes(route.query.filter)
+    ? route.query.filter
+    : 'all'
+const filter = ref(initialFilter) // 'all' | 'active' | 'done'
 
 let nextId = todos.length ? Math.max(...todos.map((t) => t.id)) + 1 : 1
 
@@ -78,44 +89,70 @@ watch(
   },
   { deep: true }
 )
-function fakeFetchTodos(filterValue) {
+function fakeFetchTodos(filterValue, shouldFail = false) {
   const delay = filterValue === 'active' ? 2000 : 300 //진행중만 일부러 느리게
   let timer
   const promise = new Promise((resolve, reject) => {
     timer = setTimeout(() => {
+      if (shouldFail) {
+        reject(new Error('목록을 불러오지 못했습니다.'))
+        return
+      }
       const result =
           filterValue === 'active' ? todos.filter((t) => !t.done)
               : filterValue === 'done' ? todos.filter((t) => t.done)
                   : todos.slice()
-    resolve(result)
-    },delay)
+      resolve(result)
+    }, delay)
   })
   const cancel = () => clearTimeout(timer)
   return { promise, cancel }
 }
 
+
 const asyncFilteredTodos = ref([])
 const isLoading = ref(false)
 let requestId = 0
 
-watch(filter, (newFilter, oldFilter, onCleanup) => {
+const hasError = ref(false)
+const simulateError = ref(false)
+
+function fetchList() {
   const currentId = ++requestId
   isLoading.value = true
+  hasError.value = false
 
   const timer = setTimeout(async () => {
-    const { promise } = fakeFetchTodos(newFilter)
-    const result = await promise
-
-    if (currentId === requestId) {
-      asyncFilteredTodos.value = result
-      isLoading.value = false
+    const { promise } = fakeFetchTodos(filter.value, simulateError.value)
+    try {
+      const result = await promise
+      if (currentId === requestId) {
+        asyncFilteredTodos.value = result
+        isLoading.value = false
+      }
+    } catch (e) {
+      if (currentId === requestId) {
+        hasError.value = true
+        isLoading.value = false
+      }
     }
-  })
+  }, 300)
 
-  onCleanup(() => {
-    clearTimeout(timer)
-  })
-}, {immediate: true})
+  return () => clearTimeout(timer)
+}
+
+watch(filter, (newFilter, oldFilter, onCleanup) => {
+  const cancel = fetchList()
+  onCleanup(cancel)
+}, { immediate: true })
+
+watch(filter, (newFilter) => {
+  router.replace({ query: { ...route.query, filter: newFilter } })
+})
+
+function retry() {
+  fetchList()
+}
 
 </script>
 
@@ -124,6 +161,8 @@ watch(filter, (newFilter, oldFilter, onCleanup) => {
     <h1>To-Do List</h1>
 
     <TodoInput @add="addTodo" />
+
+    <p style="font-size:12px;color:#999;">창 크기: {{ width }} x {{ height }}</p>
 
     <div class="filters">
       <button
@@ -138,37 +177,31 @@ watch(filter, (newFilter, oldFilter, onCleanup) => {
       >
         {{ f.label }}
       </button>
-
-      <p v-if="isLoading">불러오는 중...</p>
-
-      <button @click = "resetFilter" :disabled = "filter === 'all'"></button>
     </div>
 
+    <label style="font-size:12px;color:#999;">
+        <input type="checkbox" v-model="simulateError" /> 에러 시뮬레이션
+      </label>
+
+      <p v-if="isLoading">불러오는 중...</p>
+      <div v-else-if="hasError" class="error-box">
+        <p>목록을 불러오지 못했습니다.</p>
+        <button @click="retry">다시 시도</button>
+      </div>
     <TodoList
-        :todos="filteredTodos"
-        @toggle="toggleTodo"
-        @remove="removeTodo"
-    >
 
-    </TodoList>
-
-    <StatCardList
-        :kpis="kpis"
-        @select="(id) => (filter = id === 'done' ? 'done' : id === 'remaining' ? 'active' : 'all')"
-    />
-
-    <footer class="summary">
-      <span>남은 항목 {{ remainingCount }}개 / 완료 {{ doneCount }}</span>
-      <button
-        class="clear-btn"
-        :disabled="doneCount === 0"
-        @click="clearCompleted"
+          v-else
+          :todos="asyncFilteredTodos"
+          @toggle="toggleTodo"
+          @remove="removeTodo"
       >
-        완료 항목 지우기
-      </button>
-    </footer>
+        <template #empty>
+          <p>조건에 맞는 항목이 없어요 🔍</p>
+        </template>
+      </TodoList>
   </main>
 </template>
+
 
 <style scoped>
 .card {
