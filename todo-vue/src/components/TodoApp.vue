@@ -90,11 +90,13 @@ watch(
   { deep: true }
 )
 function fakeFetchTodos(filterValue, shouldFail = false) {
+  console.log('shouldFail:', shouldFail)
   const delay = filterValue === 'active' ? 2000 : 300 //진행중만 일부러 느리게
   let timer
   const promise = new Promise((resolve, reject) => {
     timer = setTimeout(() => {
       if (shouldFail) {
+        console.log('reject 진입')
         reject(new Error('목록을 불러오지 못했습니다.'))
         return
       }
