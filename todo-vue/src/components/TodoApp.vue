@@ -5,6 +5,8 @@ import TodoList from './TodoList.vue'
 import StatCardList from './StatCardList.vue'
 import { useWindowSize } from '../composables/useWindowSize'
 import { useRoute, useRouter } from 'vue-router'
+import { useFilterStore } from '../store/filterStore'
+import { fetchTodos } from '../api/todoApi'
 
 const { width, height } = useWindowSize()   // ← 3단계, 바로 이 줄
 
@@ -27,10 +29,11 @@ const todos = reactive(loadInitialTodos())
 
 // 필터 상태: 단일 값이므로 ref
 // URL에 ?filter=active 같은 값이 있으면 그걸 초기값으로 사용
+const filterStore = useFilterStore()
+
 const initialFilter = ['all', 'active', 'done'].includes(route.query.filter)
-    ? route.query.filter
-    : 'all'
-const filter = ref(initialFilter) // 'all' | 'active' | 'done'
+    ? route.query.filter : 'all'
+filterStore.setFilter(initialFilter)
 
 let nextId = todos.length ? Math.max(...todos.map((t) => t.id)) + 1 : 1
 
@@ -89,34 +92,15 @@ watch(
   },
   { deep: true }
 )
-function fakeFetchTodos(filterValue, shouldFail = false) {
-  console.log('shouldFail:', shouldFail)
-  const delay = filterValue === 'active' ? 2000 : 300 //진행중만 일부러 느리게
-  let timer
-  const promise = new Promise((resolve, reject) => {
-    timer = setTimeout(() => {
-      if (shouldFail) {
-        console.log('reject 진입')
-        reject(new Error('목록을 불러오지 못했습니다.'))
-        return
-      }
-      const result =
-          filterValue === 'active' ? todos.filter((t) => !t.done)
-              : filterValue === 'done' ? todos.filter((t) => t.done)
-                  : todos.slice()
-      resolve(result)
-    }, delay)
-  })
-  const cancel = () => clearTimeout(timer)
-  return { promise, cancel }
-}
 
 
 const asyncFilteredTodos = ref([])
 const isLoading = ref(false)
 let requestId = 0
+const simulateTimeout = ref(false)
 
 const hasError = ref(false)
+const errorMessage = ref('')
 const simulateError = ref(false)
 
 function fetchList() {
@@ -125,7 +109,10 @@ function fetchList() {
   hasError.value = false
 
   const timer = setTimeout(async () => {
-    const { promise } = fakeFetchTodos(filter.value, simulateError.value)
+    const promise = fetchTodos(todos, filterStore.filter, {
+      shouldFail: simulateError.value,
+      shouldTimeout: simulateTimeout.value,
+    })
     try {
       const result = await promise
       if (currentId === requestId) {
@@ -135,20 +122,20 @@ function fetchList() {
     } catch (e) {
       if (currentId === requestId) {
         hasError.value = true
+        errorMessage.value = e.message
         isLoading.value = false
       }
     }
   }, 300)
-
   return () => clearTimeout(timer)
 }
 
-watch(filter, (newFilter, oldFilter, onCleanup) => {
+watch(() => filterStore.filter, (newFilter, oldFilter, onCleanup) => {
   const cancel = fetchList()
   onCleanup(cancel)
 }, { immediate: true })
 
-watch(filter, (newFilter) => {
+watch(() => filterStore.filter, (newFilter) => {
   router.replace({ query: { ...route.query, filter: newFilter } })
 })
 
@@ -167,27 +154,20 @@ function retry() {
     <p style="font-size:12px;color:#999;">창 크기: {{ width }} x {{ height }}</p>
 
     <div class="filters">
-      <button
-        v-for="f in [
-          { key: 'all', label: '전체' },
-          { key: 'active', label: '진행중' },
-          { key: 'done', label: '완료' },
-        ]"
-        :key="f.key"
-        :class="{ active: filter === f.key }"
-        @click="filter = f.key"
-      >
-        {{ f.label }}
-      </button>
+      <button v-for="f in [{key:'all',label:'전체'},{key:'active',label:'진행중'},{key:'done',label:'완료'}]" :key="f.key" :class="{active: filterStore.filter===f.key}" @click="filterStore.setFilter(f.key)">{{ f.label }}</button>
+      <button @click="filterStore.resetFilter()" style="margin-left:8px;color:#999;">초기화</button>
     </div>
 
     <label style="font-size:12px;color:#999;">
-        <input type="checkbox" v-model="simulateError" /> 에러 시뮬레이션
-      </label>
+      <input type="checkbox" v-model="simulateError" /> 에러 시뮬레이션
+    </label>
+    <label style="font-size:12px;color:#999; margin-left:8px;">
+      <input type="checkbox" v-model="simulateTimeout" /> 타임아웃 시뮬레이션
+    </label>
 
       <p v-if="isLoading">불러오는 중...</p>
       <div v-else-if="hasError" class="error-box">
-        <p>목록을 불러오지 못했습니다.</p>
+        <p>{{ errorMessage }}</p>
         <button @click="retry">다시 시도</button>
       </div>
     <TodoList
