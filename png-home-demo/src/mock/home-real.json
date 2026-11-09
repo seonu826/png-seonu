@@ -1,0 +1,274 @@
+{
+  "source": "本地后端（测试库）首页接口响应快照：pcDeco/index、guessYouLike、firstAdv（2026-11-07）",
+  "banners": [
+    {
+      "img": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/9D5ryEamt5PYdjxMXz0.png?bindId=3620"
+    },
+    {
+      "img": "https://image.global-png.com/b2bdevpuenzhiimages/seller/goods/u2wIYcyGt4yCmUR42Bj.png"
+    },
+    {
+      "img": "https://image.global-png.com/b2bdevpuenzhiimages/seller/goods/SKKxfSKYkBTjd4VAeGW.png"
+    },
+    {
+      "img": "https://image.global-png.com/b2bdevpuenzhiimages/seller/goods/kkGVjESvTf6psvFrSDm.png?bindId=320"
+    },
+    {
+      "img": "https://image.global-png.com/b2bdevpuenzhiimages/seller/goods/S4IPvpE4e0ufQ8GdYnI.png"
+    },
+    {
+      "img": "https://image.global-png.com/b2bdevpuenzhiimages/seller/goods/1DrREanq4U3L9T55dcj.png"
+    }
+  ],
+  "features": [
+    {
+      "title": "供应商入驻",
+      "sub": "优质供应商快速入驻",
+      "icon": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/0NC1T5NlxqIjjt6pfnn.png"
+    },
+    {
+      "title": "国产替代",
+      "sub": "精准匹配国产方案",
+      "icon": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/0lgmPeYx0Tm8RhrUgMK.png"
+    },
+    {
+      "title": "新品速递",
+      "sub": "第一时间获取新品",
+      "icon": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/FdgKVeATeLiyechoBcu.png"
+    },
+    {
+      "title": "快速下单",
+      "sub": "批量采购一键下单",
+      "icon": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/ktiHG6ASeJfQgswvWSt.png"
+    }
+  ],
+  "wideAd": {
+    "img": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/WIOPFB4pAAZEGAD6hMH.png?bindId=2976"
+  },
+  "smallAds": [
+    {
+      "title": "材料部件",
+      "img": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/PnYvqcvFLK4ajCvspGp.png?bindId=2061"
+    },
+    {
+      "title": "电池&储能",
+      "img": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/giXyYNmj7l9iz9xzYya.png?bindId=1931"
+    },
+    {
+      "title": "整机模组",
+      "img": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/7CTcUPj3pl4agTiOky6.png?bindId=1930"
+    },
+    {
+      "title": "耗材备件",
+      "img": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/r0j9p7p8wHX5cPlvBDK.png?bindId=1927"
+    }
+  ],
+  "industries": [
+    {
+      "title": "产业资讯",
+      "sub": "优质供应·快速匹配",
+      "img": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/9D5ryEamt5PYdjxMXz0.png?bindId=3620",
+      "note": "原图为 GIF；顶部弹窗广告图放大后模糊，改用首页轮播图（1920 宽，高清）"
+    },
+    {
+      "title": "热销物料",
+      "sub": "优质供应·快速匹配",
+      "img": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/dKg4mV0bBTLabSw5Trp.png?bindId=2211"
+    },
+    {
+      "title": "半导体",
+      "sub": "优质供应·快速匹配",
+      "img": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/SODBsEQ9DxCAEtEfd1l.png?bindId=2718"
+    },
+    {
+      "title": "电子元器件",
+      "sub": "优质供应·快速匹配",
+      "img": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/xgX6oPAuNDmK00KUQjF.png?bindId=2215"
+    },
+    {
+      "title": "二手设备",
+      "sub": "优质供应·快速匹配",
+      "img": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/W4bLZQrJYs47r3GR2fi.png?bindId=1733"
+    },
+    {
+      "title": "国产替代",
+      "sub": "优质供应·快速匹配",
+      "img": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/9Esdaho6S88yZ70Ap0f.png?bindId=1738"
+    },
+    {
+      "title": "新品专区",
+      "sub": "优质供应·快速匹配",
+      "img": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/bTQnHnGal8jmKx2juHN.png?bindId=1735"
+    },
+    {
+      "title": "样品申请",
+      "sub": "优质供应·快速匹配",
+      "img": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/bTQnHnGal8jmKx2juHN.png?bindId=1735"
+    }
+  ],
+  "todayPicks": [
+    {
+      "name": "FPC脉冲热压机5",
+      "price": null,
+      "tag": "现货",
+      "img": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/95kzjWU1Z4Yrh1MP2Ab.png"
+    },
+    {
+      "name": "FPC自动推拉脉冲热压机",
+      "price": null,
+      "tag": "现货",
+      "img": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/6M3k41RL0Ef1dvdEeri.png"
+    },
+    {
+      "name": "双焊头双工位/自动脉冲热压机",
+      "price": null,
+      "tag": "现货",
+      "img": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/pQkYanUH2ihLs7Wc41j.png"
+    },
+    {
+      "name": "在线式激光打标机",
+      "price": null,
+      "tag": "现货",
+      "img": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/FD4ZvLia6cwej7rpj7D.png"
+    },
+    {
+      "name": "硅片",
+      "price": 400.0,
+      "tag": "现货",
+      "img": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/ktiHG6ASeJfQgswvWSt.png?bindId=3706"
+    },
+    {
+      "name": "半导体",
+      "price": 100.0,
+      "tag": "现货",
+      "img": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/Yfts9o5HdNPdhMN5H2S.png?bindId=3708"
+    },
+    {
+      "name": "半导体级去离子水系统",
+      "price": 1.0,
+      "tag": "现货",
+      "img": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/ktiHG6ASeJfQgswvWSt.png?bindId=3706"
+    },
+    {
+      "name": "晶圆清洗设备",
+      "price": 0.01,
+      "tag": "现货",
+      "img": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/ktiHG6ASeJfQgswvWSt.png?bindId=3706"
+    },
+    {
+      "name": "导电银",
+      "price": 1.0,
+      "tag": "现货",
+      "img": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/ktiHG6ASeJfQgswvWSt.png?bindId=3706"
+    },
+    {
+      "name": "等离子清洗机",
+      "price": 1.0,
+      "tag": "现货",
+      "img": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/ktiHG6ASeJfQgswvWSt.png?bindId=3706"
+    }
+  ],
+  "insights": [
+    {
+      "title": "EUV 光刻产业链最新动态",
+      "tag": "行业资讯",
+      "date": "2026-08-24",
+      "img": "https://testimage.global-png.com/b2bdevpuenzhiimages/member/headImg/L5PQ2VHiGPxJli2LFI8.jpg"
+    },
+    {
+      "title": "HBM 封装技术与中韩合作进展",
+      "tag": "行业资讯",
+      "date": "2026-08-17",
+      "img": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/9D5ryEamt5PYdjxMXz0.png"
+    },
+    {
+      "title": "Hybrid Bonding 量产化路径分析",
+      "tag": "行业资讯",
+      "date": "2026-08-12",
+      "img": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/nxIDzixtJ9fPUp7F7yY.png"
+    },
+    {
+      "title": "国产光刻胶验证进入关键阶段",
+      "tag": "行业资讯",
+      "date": "2026-08-08",
+      "img": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/nxIDzixtJ9fPUp7F7yY.png",
+      "note": "原第 4 篇封面为 GIF（不走 Thumbor），改用第 3 篇的封面图"
+    }
+  ],
+  "guess": [
+    {
+      "name": "晶圆超精密激光开槽设备   LWS3000",
+      "price": null,
+      "unit": "个",
+      "tag": "现货",
+      "img": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/3lfza9iQaKI0prZ1w4r.png"
+    },
+    {
+      "name": "iTracker 6D姿态智能传感器",
+      "price": null,
+      "unit": "个",
+      "tag": "现货",
+      "img": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/lIqTmTUqS6SPTtZJig8.png"
+    },
+    {
+      "name": "导电银姜",
+      "price": 1,
+      "unit": "个",
+      "tag": "现货",
+      "img": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/ktiHG6ASeJfQgswvWSt.png?bindId=3706"
+    },
+    {
+      "name": "K29风管VOC传感器",
+      "price": null,
+      "unit": "个",
+      "tag": "现货",
+      "img": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/Uw5bJPULtiP1YKqJ1GZ.png"
+    },
+    {
+      "name": "YAG Powder (Y₃Al₅O₁₂)",
+      "price": null,
+      "unit": "个",
+      "tag": "现货",
+      "img": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/6swJbnq8mxHq3oNbbtB.png"
+    },
+    {
+      "name": "FPC自动推拉脉冲热压机",
+      "price": null,
+      "unit": "个",
+      "tag": "现货",
+      "img": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/6M3k41RL0Ef1dvdEeri.png"
+    },
+    {
+      "name": "透气塞",
+      "price": null,
+      "unit": "个",
+      "tag": "现货",
+      "img": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/pZ4T4pTPVXlmjrXk6Xp.png"
+    },
+    {
+      "name": "四路数字光源控制器",
+      "price": null,
+      "unit": "个",
+      "tag": "现货",
+      "img": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/eCsZsCMt4MpEnwNcuBI.jpg",
+      "note": "原图地址无效（测试数据），替换为同区块其他商品图"
+    },
+    {
+      "name": "ICP离子源",
+      "price": null,
+      "unit": "个",
+      "tag": "现货",
+      "img": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/eCsZsCMt4MpEnwNcuBI.jpg"
+    },
+    {
+      "name": "等离子清洗机",
+      "price": 1,
+      "unit": "个",
+      "tag": "现货",
+      "img": "https://testimage.global-png.com/b2bdevpuenzhiimages/seller/goods/ktiHG6ASeJfQgswvWSt.png?bindId=3706"
+    }
+  ],
+  "topAdv": {
+    "img": "https://image.global-png.com/b2bdevpuenzhiimages/seller/goods/fXCcjP9zKY3nqbzPwx4.png?bindId=1145"
+  }
+}

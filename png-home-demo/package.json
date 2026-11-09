@@ -1,0 +1,20 @@
+{
+  "name": "png-home-demo",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "普恩志首页仿制页 + Thumbor 图片裁剪压缩演示（独立项目，不属于公司仓库）",
+  "scripts": {
+    "dev": "vite --port 5180 --open",
+    "compare": "vite --port 5180 --open /compare.html",
+    "build": "vite build",
+    "preview": "vite preview --port 5181"
+  },
+  "dependencies": {
+    "vue": "3.4.38"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "5.1.4",
+    "vite": "5.4.10"
+  }
+}
